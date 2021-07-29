@@ -16,7 +16,11 @@ mod state;
 fn main() -> amethyst::Result<()> {
     amethyst::start_logger(Default::default());
 
-    let app_root = application_root_dir()?;
+    let mut app_root = application_root_dir()?;
+    
+    while app_root.ends_with("debug") || app_root.ends_with("target") {
+        app_root.pop();
+    }
 
     let resources = app_root.join("assets");
     let display_config = app_root.join("config/display_config.ron");
